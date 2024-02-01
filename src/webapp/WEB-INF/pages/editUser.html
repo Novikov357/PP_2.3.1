@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users Table</title>
+    <style>
+        table {
+            background-color: #d8da3d;
+            table-layout: fixed;
+            width: 25%;
+            height: 25%;
+            border: double 5px;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 2px solid;
+        }
+    </style>
+</head>
+
+<body>
+<div>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>LastName</th>
+            <th>age</th>
+        </tr>
+        <th:block>
+            <td th:text="${user.getId()}"></td>
+            <td th:text="${user.getName()}"></td>
+            <td th:text="${user.getLastname()}"></td>
+            <td th:text="${user.getAge()}"></td>
+
+            <form th:method="get" th:action="@{/delete}" th:object="${user}">
+                <a hidden="hidden" id="IdAnchor" th:href="'/delete?id='+${user.id}"></a>
+                <script>
+                    const anchor = document.getElementById("IdAnchor");
+                </script>
+                <td><input type="button" value="Delete" onClick="window.location.href = anchor"/></td>
+            </form>
+            </tr>
+        </th:block>
+    </table>
+</div>
+<br>
+
+<fieldset>
+    <legend><b>Update user</b></legend>
+    <form th:method="post" th:action="@{/applyapdate}" th:object="${user}">
+        <label>ID
+            <input readonly type="text" th:field="*{id}">
+        </label>
+        <br>
+        <label>Name
+            <input type="text" required placeholder="Имя" th:field="*{name}">
+        </label>
+        <br>
+        <label>Lastname
+            <input type="text" required placeholder="Фамилия" th:field="*{lastname}">
+        </label>
+        <br>
+        <label>Age
+            <input type="number" min=1 max=99 th:field="*{age}">
+        </label>
+        <br>
+        <td><input type="submit" value="Update User"></td>
+        <td><input type="reset" value="Reset"></td>
+        <td><a th:href="'/'">Main page</a></td>
+    </form>
+</fieldset>
+</body>
+</html>

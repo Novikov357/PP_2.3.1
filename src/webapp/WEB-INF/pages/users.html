@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users Table</title>
+    <style>
+        table {
+            background-color: #d8da3d;
+            table-layout: fixed;
+            width: 25%;
+            height: 25%;
+            border: double 5px;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Lastname</th>
+            <th>Age</th>
+        </tr>
+        <th:block th:each="user : ${users}">
+            <tr>
+                <td th:text="${user.getId()}"></td>
+                <td th:text="${user.getName()}"></td>
+                <td th:text="${user.getLastname()}"></td>
+                <td th:text="${user.getAge()}"></td>
+                <td><a th:href="'/edit?id='+${user.getId()}">Edit</a></td>
+            </tr>
+        </th:block>
+    </table>
+    <br>
+</div>
+<br>
+
+<fieldset>
+    <legend><b>Add user</b></legend>
+    <form th:method="post" th:action="@{/new}" th:object="${user}">
+        <label>Name
+            <input type="text" required placeholder="Имя" th:field="*{name}">
+        </label>
+        <br>
+        <label>Lastname
+            <input type="text" required placeholder="Фамилия" th:field="*{lastname}">
+        </label>
+        <br>
+        <label>Age
+            <input type="number" required min=1 max=99 th:field="*{age}">
+        </label>
+        <br>
+        <td><input type="submit" value="Add User"></td>
+        <td><input type="reset" value="Reset"></td>
+    </form>
+</fieldset>
+
+</body>
+</html>
